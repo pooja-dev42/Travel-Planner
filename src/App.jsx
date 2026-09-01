@@ -4,7 +4,6 @@ import MyTrips from "./pages/MyTrips";
 import About from "./pages/About";
 import Budget from "./pages/Budget";
 import PlanTrip from "./pages/PlanTrip";
-
 import Itinerary from "./pages/Itinerary";
 import TripDetail from "./pages/TripDetail";
 import Navbar from "./components/layout/Navbar";
