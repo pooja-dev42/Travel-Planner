@@ -1,45 +1,48 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+
+import { trips as initialTrips } from "../data/trips";
 
 const TripContext = createContext();
 
-const initialTrip = {
-  destination: "Tokyo",
-  startDate: "2026-09-10",
-  endDate: "2026-09-17",
+const emptyTrip = {
+  destination: "",
+  startDate: "",
+  endDate: "",
 
   travelers: {
-    adults: 2,
-    children: 1,
+    adults: 1,
+    children: 0,
   },
 
-  budget: "2000",
+  budget: 1500,
 
-  travelStyles: ["Food", "Culture", "Nature"],
+  travelStyles: [],
 
-  travelPace: "balanced",
+  travelPace: "Balanced",
 
-  notes: "I want local food and less crowded places.",
+  notes: "",
 };
 
 export function TripProvider({ children }) {
   const [trip, setTrip] = useState(() => {
-    const savedTrip = localStorage.getItem("trip");
+    const saved = localStorage.getItem("currentTrip");
 
-    if (!savedTrip) {
-      return initialTrip;
-    }
+    return saved ? JSON.parse(saved) : emptyTrip;
+  });
 
-    try {
-      return JSON.parse(savedTrip);
-    } catch (error) {
-      localStorage.removeItem("trip");
-      return initialTrip;
-    }
+  const [trips, setTrips] = useState(() => {
+    const saved = localStorage.getItem("trips");
+
+    return saved ? JSON.parse(saved) : initialTrips;
   });
 
   useEffect(() => {
-    localStorage.setItem("trip", JSON.stringify(trip));
+    localStorage.setItem("currentTrip", JSON.stringify(trip));
   }, [trip]);
+
+  useEffect(() => {
+    localStorage.setItem("trips", JSON.stringify(trips));
+  }, [trips]);
 
   const updateTrip = (field, value) => {
     setTrip((prev) => ({
@@ -48,12 +51,12 @@ export function TripProvider({ children }) {
     }));
   };
 
-  const updateTravelers = (field, value) => {
+  const updateTravelers = (type, value) => {
     setTrip((prev) => ({
       ...prev,
       travelers: {
         ...prev.travelers,
-        [field]: value,
+        [type]: value,
       },
     }));
   };
@@ -71,26 +74,36 @@ export function TripProvider({ children }) {
     });
   };
 
-  const resetTrip = () => {
-    setTrip(initialTrip);
-    localStorage.removeItem("trip");
+  const getTrip = (id) => {
+    return trips.find((item) => item.id === id);
+  };
+
+  const addTrip = (newTrip) => {
+    setTrips((prev) => [...prev, newTrip]);
+  };
+
+  const removeTrip = (id) => {
+    setTrips((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
     <TripContext.Provider
       value={{
         trip,
+        trips,
         updateTrip,
         updateTravelers,
         toggleTravelStyle,
-        resetTrip,
-      }}>
+        getTrip,
+        addTrip,
+        removeTrip,
+      }}
+    >
       {children}
     </TripContext.Provider>
   );
 }
 
 export function useTrip() {
-  const context = useContext(TripContext);
-  return context;
+  return useContext(TripContext);
 }

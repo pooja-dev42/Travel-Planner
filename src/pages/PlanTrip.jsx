@@ -1,6 +1,7 @@
 import { MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import { generateItinerary } from "../geminidata/gemini";
+import { useState } from "react";
 import FormField from "../components/planTrip/FormField";
 import Stepper from "../components/planTrip/Stepper";
 import TagSelector from "../components/planTrip/TagSelector";
@@ -13,13 +14,22 @@ export default function PlanTripPage() {
   const navigate = useNavigate();
 
   const { trip, updateTrip, updateTravelers, toggleTravelStyle } = useTrip();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    console.log(trip);
-
-    navigate("/trips");
+    try {
+      setLoading(true);
+      const result = await generateItinerary(trip);
+      console.log("Gemini result:", result);
+      localStorage.setItem("generatedTrip", JSON.stringify(result));
+      navigate("/itinerary");
+    } catch (error) {
+      console.error("ITINERARY ERROR:", error);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -28,11 +38,9 @@ export default function PlanTripPage() {
         <h1 className='text-3xl font-semibold text-charcoal'>
           Where are you going?
         </h1>
-
         <p className='mt-2 text-sm text-muted'>
           Tell us a little about your trip and we'll help you plan it.
         </p>
-
         <form onSubmit={handleSubmit} className='mt-8 space-y-8'>
           <FormField label='Destination'>
             <div className='relative'>
@@ -40,7 +48,6 @@ export default function PlanTripPage() {
                 size={16}
                 className='absolute left-3.5 top-1/2 -translate-y-1/2 text-muted'
               />
-
               <input
                 type='text'
                 value={trip.destination}
@@ -83,7 +90,6 @@ export default function PlanTripPage() {
                 onChange={(value) => updateTravelers("adults", value)}
                 min={1}
               />
-
               <Stepper
                 label='Children'
                 value={trip.travelers.children}
@@ -93,12 +99,10 @@ export default function PlanTripPage() {
             </div>
           </div>
 
-          {/* Budget */}
           <div className='rounded-2xl bg-wander-50 p-5'>
             <p className='text-sm font-medium text-charcoal'>
               How much would you like to spend?
             </p>
-
             <input
               type='number'
               min='0'
@@ -111,13 +115,11 @@ export default function PlanTripPage() {
               Total budget for all travelers, excluding flights.
             </p>
           </div>
-
           {/* Travel Style */}
           <div>
             <p className='text-sm font-medium text-charcoal'>
               What's your style?
             </p>
-
             <div className='mt-2'>
               <TagSelector
                 options={styles}
@@ -126,13 +128,11 @@ export default function PlanTripPage() {
               />
             </div>
           </div>
-
           {/* Travel Pace */}
           <div>
             <p className='text-sm font-medium text-charcoal'>
               How do you like to travel?
             </p>
-
             <div className='mt-2'>
               <SegmentedControl
                 options={traveltype}
@@ -164,8 +164,8 @@ export default function PlanTripPage() {
 
             <button
               type='submit'
-              className='rounded-xl bg-wander-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-wander-700'>
-              Create my itinerary
+              className='rounded-xl bg-wander-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-wander-700 disabled:opacity-50'>
+              {loading ? "Creating..." : "Create my itinerary"}
             </button>
           </div>
         </form>
