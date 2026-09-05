@@ -1,25 +1,29 @@
-import React from 'react';
+import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#faf8f5] border-t border-gray-200 text-gray-600">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          
+    <footer className='border-t border-border bg-cream text-muted'>
+      <div className='mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8'>
+        <div className='mb-8 grid grid-cols-1 gap-8 md:grid-cols-4'>
           {/* Brand Info */}
-          <div className="space-y-3">
-            <span className="text-xl font-bold tracking-tight text-gray-900">
-              Wander<span className="text-emerald-600">Trip</span>
+          <div className='space-y-3'>
+            <span className='text-xl font-semibold tracking-tight text-charcoal'>
+              Wander<span className='text-wander-600'>Trip</span>
             </span>
-            <p className="text-sm text-gray-500">
-              Discover your next great adventure, plan with AI, and explore the world seamlessly.
+
+            <p className='text-sm text-muted'>
+              Discover your next great adventure, plan with AI, and explore the
+              world seamlessly.
             </p>
           </div>
 
-          {/* Popular Cities (Static) */}
+          {/* Popular Cities */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">Top Destinations</h4>
-            <ul className="space-y-2 text-sm text-gray-500">
+            <h4 className='mb-3 text-sm font-semibold uppercase tracking-wider text-charcoal'>
+              Top Destinations
+            </h4>
+
+            <ul className='space-y-2 text-sm text-muted'>
               <li>Tokyo, Japan</li>
               <li>Paris, France</li>
               <li>Bali, Indonesia</li>
@@ -27,10 +31,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Travel Categories (Static) */}
+          {/* Travel Categories */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">Travel Vibe</h4>
-            <ul className="space-y-2 text-sm text-gray-500">
+            <h4 className='mb-3 text-sm font-semibold uppercase tracking-wider text-charcoal'>
+              Travel Vibe
+            </h4>
+
+            <ul className='space-y-2 text-sm text-muted'>
               <li>Culture & History</li>
               <li>Nature & Wildlife</li>
               <li>Food & Nightlife</li>
@@ -38,20 +45,31 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info (Static) */}
+          {/* Contact Info */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">Get in Touch</h4>
-            <p className="text-sm text-gray-500 mb-1">Support: myathandarko4@gmail.com</p>
-            <p className="text-sm text-gray-500 mb-1">Support: poojathiwari52@gmail.com</p>
-            <p className="text-sm text-gray-500">Phone: +95 9345785432</p>
-          </div>
+            <h4 className='mb-3 text-sm font-semibold uppercase tracking-wider text-charcoal'>
+              Get in Touch
+            </h4>
 
+            <p className='mb-1 text-sm text-muted'>
+              Support: myathandarko4@gmail.com
+            </p>
+
+            <p className='mb-1 text-sm text-muted'>
+              Support: poojathiwari52@gmail.com
+            </p>
+
+            <p className='text-sm text-muted'>Phone: +95 9345785432</p>
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-200 pt-6 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500">
+        <div className='flex flex-col items-center justify-between border-t border-border pt-4 text-sm text-muted sm:flex-row'>
           <p>© 2026 Wander Travel. All rights reserved.</p>
-          <p className="mt-2 sm:mt-0 font-medium text-emerald-700">Crafted for memorable journeys.</p>
+
+          <p className='mt-2 font-medium text-wander-700 sm:mt-0'>
+            Crafted for memorable journeys.
+          </p>
         </div>
       </div>
     </footer>

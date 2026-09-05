@@ -1,20 +1,25 @@
-export default function TagSelector({ options, selected, onToggle }) {
+export default function TagSelector({ options = [], selected = [], onToggle }) {
   return (
     <div className='flex flex-wrap gap-2'>
-      {options.map((style) => {
-        const selectedStyle = selected.includes(style);
+      {options.map((option) => {
+        const label = typeof option === "object" ? option.label : option;
+
+        const value =
+          typeof option === "object" ? option.id || option.value : option;
+
+        const isSelected = selected.includes(value);
 
         return (
           <button
-            key={style}
+            key={value}
             type='button'
-            onClick={() => onToggle(style)}
+            onClick={() => onToggle(value)}
             className={
-              selectedStyle
-                ? "rounded-full bg-wander-600 px-4 py-2 text-white"
-                : "rounded-full border border-border bg-white px-4 py-2 text-charcoal"
+              isSelected
+                ? "rounded-lg bg-wander-600 px-3 py-2 text-sm text-white"
+                : "rounded-lg border border-border bg-white px-3 py-2 text-sm text-charcoal hover:bg-wander-50"
             }>
-            {style}
+            {label}
           </button>
         );
       })}

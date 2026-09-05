@@ -1,32 +1,28 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import MyTrips from "./pages/MyTrips";
-import About from "./pages/About";
-import Budget from "./pages/Budget";
-import PlanTrip from "./pages/PlanTrip";
-import Itinerary from "./pages/Itinerary";
-import TripDetail from "./pages/TripDetail";
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer"
+import Home from "./pages/Home.jsx";
+import MyTrips from "./pages/MyTrips.jsx";
+import About from "./pages/About.jsx";
+import PlanTrip from "./pages/PlanTrip.jsx";
+import Itinerary from "./pages/Itinerary.jsx";
+import Navbar from "./components/layout/Navbar.jsx";
+import Footer from "./components/layout/Footer.jsx";
 
 function App() {
   return (
     <>
-    <Navbar />
-    <div className='app'>
-      <main className='app-main'>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/my-trip' element={<MyTrips />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/plan-trip' element={<PlanTrip />} />
-          <Route path='/budget' element={<Budget />} />
-          <Route path='/itinerary' element={<Itinerary />} />
-          <Route path='/trip-detail' element={<TripDetail />} />
-        </Routes>
-      </main>
-    </div>
-    <Footer />
+      <Navbar />
+      <div className='app'>
+        <main className='app-main'>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/my-trip' element={<MyTrips />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/plan-trip' element={<PlanTrip />} />
+            <Route path='/itinerary' element={<Itinerary />} />
+          </Routes>
+        </main>
+      </div>
+      <Footer />
     </>
   );
 }
