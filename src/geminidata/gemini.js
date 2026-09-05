@@ -1,7 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-const API_KEY = "YOUR_REAL_GEMINI_API_KEY";
-
 export async function generateItinerary(trip) {
   const prompt = `
 Create a travel itinerary for ${trip.destination}.
@@ -52,43 +50,36 @@ Use this format:
 Create one days_data object for every day.
 `;
 
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
-    {
-      method: "POST",
+  const response = await fetch(API_URL, {
+    method: "POST",
 
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: prompt,
-              },
-            ],
-          },
-        ],
-
-        generationConfig: {
-          responseMimeType: "application/json",
-        },
-      }),
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+
+    body: JSON.stringify({
+      contents: [
+        {
+          parts: [
+            {
+              text: prompt,
+            },
+          ],
+        },
+      ],
+      generationConfig: {
+        responseMimeType: "application/json",
+      },
+    }),
+  });
 
   if (!response.ok) {
     const errorText = await response.text();
-
-    console.error("Gemini error:", errorText);
 
     throw new Error(`Gemini error ${response.status}: ${errorText}`);
   }
 
   const data = await response.json();
-
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
   if (!text) {

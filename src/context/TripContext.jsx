@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { trips as initialTrips } from "../data/trips";
+import { trips as initialTrips } from "../data/tripsdemo";
 
 const TripContext = createContext();
 
@@ -14,7 +14,7 @@ const emptyTrip = {
     children: 0,
   },
 
-  budget: 1500,
+  budget: "Moderate",
 
   travelStyles: [],
 
@@ -26,14 +26,12 @@ const emptyTrip = {
 export function TripProvider({ children }) {
   const [trip, setTrip] = useState(() => {
     const saved = localStorage.getItem("currentTrip");
-
     return saved ? JSON.parse(saved) : emptyTrip;
   });
 
   const [trips, setTrips] = useState(() => {
     const saved = localStorage.getItem("trips");
-
-    return saved ? JSON.parse(saved) : initialTrips;
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
@@ -86,6 +84,11 @@ export function TripProvider({ children }) {
     setTrips((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const resetTrip = () => {
+  setTrip(emptyTrip);
+  localStorage.removeItem("currentTrip");
+};
+
   return (
     <TripContext.Provider
       value={{
@@ -97,8 +100,8 @@ export function TripProvider({ children }) {
         getTrip,
         addTrip,
         removeTrip,
-      }}
-    >
+        resetTrip,
+      }}>
       {children}
     </TripContext.Provider>
   );
