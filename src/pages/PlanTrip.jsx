@@ -46,6 +46,9 @@ export default function PlanTripPage() {
         endDate: trip.endDate,
         budget: trip.budget,
         travelers: trip.travelers,
+        travelStyles: trip.travelStyles,
+        travelPace: trip.travelPace,
+        notes: trip.notes,
       };
 
       localStorage.setItem("generatedTrip", JSON.stringify(completeTrip));
