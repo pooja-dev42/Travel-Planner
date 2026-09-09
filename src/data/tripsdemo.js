@@ -88,8 +88,7 @@ const tokyoDays = [
     label: "Day 3",
     date: "Sept 12, 2026",
     title: "Odaiba & Waterfront",
-    description:
-      "Futuristic architecture and skyline views by the bay.",
+    description: "Futuristic architecture and skyline views by the bay.",
     activities: [
       {
         time: "10:00 AM",
@@ -120,8 +119,7 @@ const tokyoDays = [
     label: "Day 4",
     date: "Sept 13, 2026",
     title: "Shinjuku & Nightlife",
-    description:
-      "Neon streets, skyscraper views, and an evening out.",
+    description: "Neon streets, skyscraper views, and an evening out.",
     activities: [
       {
         time: "11:00 AM",
@@ -152,8 +150,7 @@ const tokyoDays = [
     label: "Day 5",
     date: "Sept 14, 2026",
     title: "Ghibli Museum & Farewell",
-    description:
-      "A relaxed last day, with the Ghibli visit you asked for.",
+    description: "A relaxed last day, with the Ghibli visit you asked for.",
     activities: [
       {
         time: "10:00 AM",
@@ -186,8 +183,7 @@ const parisDays = [
     label: "Day 1",
     date: "Oct 4, 2026",
     title: "Louvre & Le Marais",
-    description:
-      "Art in the morning, wandering cobblestones in the afternoon.",
+    description: "Art in the morning, wandering cobblestones in the afternoon.",
     activities: [
       {
         time: "9:30 AM",
@@ -218,8 +214,7 @@ const parisDays = [
     label: "Day 2",
     date: "Oct 5, 2026",
     title: "Eiffel Tower & Seine",
-    description:
-      "Classic Paris views, riverside walks, and a relaxed evening.",
+    description: "Classic Paris views, riverside walks, and a relaxed evening.",
     activities: [
       {
         time: "9:00 AM",
@@ -289,8 +284,7 @@ const parisDays = [
     label: "Day 4",
     date: "Oct 7, 2026",
     title: "Arc de Triomphe & Champs-Élysées",
-    description:
-      "Finish the trip with iconic landmarks and relaxed shopping.",
+    description: "Finish the trip with iconic landmarks and relaxed shopping.",
     activities: [
       {
         time: "10:00 AM",
@@ -335,10 +329,8 @@ export const trips = [
     days: 5,
     travelers: 2,
     status: "Upcoming",
-    heroImage:
-      "https://picsum.photos/seed/wander-tokyo-hero/1400/500",
-    cardImage:
-      "https://picsum.photos/seed/wander-tokyo/640/480",
+    heroImage: "https://picsum.photos/seed/wander-tokyo-hero/1400/500",
+    cardImage: "https://picsum.photos/seed/wander-tokyo/640/480",
 
     budget: {
       total: 1500,
@@ -366,10 +358,8 @@ export const trips = [
     days: 4,
     travelers: 1,
     status: "Planned",
-    heroImage:
-      "https://picsum.photos/seed/wander-paris-hero/1400/500",
-    cardImage:
-      "https://picsum.photos/seed/wander-paris/640/480",
+    heroImage: "https://picsum.photos/seed/wander-paris-hero/1400/500",
+    cardImage: "https://picsum.photos/seed/wander-paris/640/480",
 
     budget: {
       total: 1100,

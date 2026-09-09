@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { trips as initialTrips } from "../data/tripsdemo";
-
 const TripContext = createContext();
 
 const emptyTrip = {
@@ -85,9 +83,9 @@ export function TripProvider({ children }) {
   };
 
   const resetTrip = () => {
-  setTrip(emptyTrip);
-  localStorage.removeItem("currentTrip");
-};
+    setTrip(emptyTrip);
+    localStorage.removeItem("currentTrip");
+  };
 
   return (
     <TripContext.Provider
