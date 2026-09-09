@@ -57,8 +57,8 @@ export default function TripCard({ trip }) {
           </span>
 
           <span className='flex items-center gap-1'>
-            <Wallet size={13} />$
-            {trip.budget?.estimatedSpending?.toLocaleString() || 0}
+            <Wallet size={13} />
+            ${trip.budget?.estimatedSpending?.toLocaleString() || 0}
           </span>
         </div>
 
