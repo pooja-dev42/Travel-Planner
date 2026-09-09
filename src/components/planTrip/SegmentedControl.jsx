@@ -1,6 +1,6 @@
 export default function SegmentedControl({ options = [], value, onChange }) {
   return (
-    <div className='flex w-full rounded-lg border border-border bg-slate-50/50 p-1'>
+    <div className='flex w-full rounded-lg border border-border bg-wander-50 p-1'>
       {options.map((option) => {
         const label = typeof option === "object" ? option.label : option;
 
