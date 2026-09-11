@@ -5,7 +5,9 @@ import { useTrip } from "../../context/TripContext";
 export default function TripCard({ trip }) {
   const { removeTrip } = useTrip();
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    
     const confirmed = window.confirm(`Delete the ${trip.city} trip?`);
 
     if (confirmed) {

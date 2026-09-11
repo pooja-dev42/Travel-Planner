@@ -31,8 +31,8 @@ export default function BudgetPage() {
     isFreeActivity(activity.price),
   ).length;
 
+  //Calculate total cost per category
   const breakdown = {};
-
   activities.forEach((activity) => {
     const category = activity.category || "Other";
     const amount = getAmount(activity.price);

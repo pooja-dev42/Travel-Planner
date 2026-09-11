@@ -143,15 +143,15 @@ export default function PlanTripPage() {
               </p>
 
               <select
-                value={trip.budget || "Moderate"}
+                value={trip.budget || "Moderate: $500 - $1,000"}
                 onChange={(e) => updateTrip("budget", e.target.value)}
                 className='mt-2 w-full rounded-lg border border-border bg-white px-4 py-3 text-sm text-charcoal outline-none focus:border-wander-500 focus:ring-2 focus:ring-wander-100'>
-                <option value='Economy'>Economy: $200 - $500</option>
-                <option value='Moderate'>Moderate: $500 - $1,000</option>
-                <option value='Comfortable'>
+                <option value='$200 - $500'>Economy: $200 - $500</option>
+                <option value='$500 - $1,000'>Moderate: $500 - $1,000</option>
+                <option value='$1,000 - $2,500'>
                   Comfortable: $1,000 - $2,500
                 </option>
-                <option value='Luxury'>Luxury: $2,500+</option>
+                <option value='$2,500+'>Luxury: $2,500+</option>
               </select>
 
               <p className='mt-2 text-xs text-muted'>
