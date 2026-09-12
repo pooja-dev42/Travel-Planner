@@ -31,16 +31,20 @@ export default function ItineraryPage() {
   const isTripSaved = trips.some((trip) => trip.id === generatedTrip.id);
 
   const handleSaveTrip = () => {
-    toast("Trip already saved.");
     if (isTripSaved) {
+      toast("Trip already saved.");
       return;
     }
-    addTrip({
+
+    const newSavedTrip = {
       ...generatedTrip,
       status: "Upcoming",
       cardImage: cityCardImage,
       heroImage: cityHeroImage,
-    });
+    };
+
+    addTrip(newSavedTrip);
+
     toast.success("Trip saved successfully.");
   };
 

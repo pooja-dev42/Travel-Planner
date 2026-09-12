@@ -51,9 +51,6 @@ export default function PlanTripPage() {
         travelPace: trip.travelPace,
         notes: trip.notes,
       };
-
-      // Save the generated trip to the trips list
-      addTrip(completeTrip);
       localStorage.setItem("generatedTrip", JSON.stringify(completeTrip));
 
       resetTrip();

@@ -30,7 +30,7 @@ export default function TripHeader({ trip, handleSaveTrip, saved }) {
         <button
           type='button'
           onClick={handleSaveTrip}
-          disabled={saved}
+          disabled={false}
           className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium shadow-sm transition-colors ${
             saved
               ? "border-wander-700 bg-wander-700 text-white"
