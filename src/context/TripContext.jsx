@@ -6,18 +6,13 @@ const emptyTrip = {
   destination: "",
   startDate: "",
   endDate: "",
-
   travelers: {
     adults: 1,
     children: 0,
   },
-
-  budget: "Moderate",
-
+  budget: "$500 - $1,000",
   travelStyles: [],
-
   travelPace: "Balanced",
-
   notes: "",
 };
 
@@ -82,8 +77,12 @@ export function TripProvider({ children }) {
     setTrips((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const resetTrip = () => {
-    setTrip(emptyTrip);
+  const resetTrip = (destination = "") => {
+    setTrip({
+      ...emptyTrip,
+      destination,
+    });
+
     localStorage.removeItem("currentTrip");
   };
 

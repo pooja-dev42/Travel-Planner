@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MapPin } from "lucide-react";
+import { Check, MapPin } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { generateItinerary } from "../geminidata/gemini";
@@ -15,19 +15,14 @@ export default function PlanTripPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { trip, updateTrip, updateTravelers, toggleTravelStyle, resetTrip } =
-    useTrip();
+  const { trip, updateTrip, updateTravelers, toggleTravelStyle, addTrip, resetTrip,
+  } = useTrip();
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    resetTrip();
-
-    const destination = location.state?.destination;
-
-    if (destination) {
-      updateTrip("destination", destination);
-    }
+    const destination = location.state?.destination || "";
+    resetTrip(destination);
   }, [location.state]);
 
   const handleSubmit = async (event) => {
@@ -35,7 +30,6 @@ export default function PlanTripPage() {
 
     try {
       setLoading(true);
-
       const result = await generateItinerary(trip);
 
       const completeTrip = {
@@ -51,6 +45,8 @@ export default function PlanTripPage() {
         notes: trip.notes,
       };
 
+      // Save the generated trip to the trips list
+      addTrip(completeTrip);
       localStorage.setItem("generatedTrip", JSON.stringify(completeTrip));
 
       resetTrip();
