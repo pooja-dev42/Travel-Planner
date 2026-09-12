@@ -1,18 +1,29 @@
 import { Link } from "react-router-dom";
 import { Clock, Trash2 } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
+import toast from "react-hot-toast";
 
 export default function TripCard({ trip }) {
   const { removeTrip } = useTrip();
 
   const handleDelete = (e) => {
+    e.preventDefault();
     e.stopPropagation();
 
     const confirmed = window.confirm(`Delete the ${trip.city} trip?`);
 
-    if (confirmed) {
-      removeTrip(trip.id);
+    if (!confirmed) {
+      return;
     }
+    removeTrip(trip.id);
+
+    const currentTrip = JSON.parse(localStorage.getItem("generatedTrip"));
+
+    if (currentTrip?.id === trip.id) {
+      localStorage.removeItem("generatedTrip");
+    }
+
+    toast.success("Trip deleted successfully.");
   };
 
   const handleViewTrip = () => {

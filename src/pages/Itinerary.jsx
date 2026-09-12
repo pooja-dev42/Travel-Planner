@@ -7,6 +7,7 @@ import DayTabs from "../components/trip/DayTabs";
 import DayOverview from "../components/trip/DayOverview";
 import ActivityTimeline from "../components/trip/ActivityTimeline";
 import Budget from "../components/trip/Budget";
+import toast from "react-hot-toast";
 
 export default function ItineraryPage() {
   const { addTrip, trips } = useTrip();
@@ -30,6 +31,7 @@ export default function ItineraryPage() {
   const isTripSaved = trips.some((trip) => trip.id === generatedTrip.id);
 
   const handleSaveTrip = () => {
+    toast("Trip already saved.");
     if (isTripSaved) {
       return;
     }
@@ -39,6 +41,7 @@ export default function ItineraryPage() {
       cardImage: cityCardImage,
       heroImage: cityHeroImage,
     });
+    toast.success("Trip saved successfully.");
   };
 
   const day =
