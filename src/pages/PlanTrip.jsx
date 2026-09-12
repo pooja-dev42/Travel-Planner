@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Check, MapPin } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { generateItinerary } from "../geminidata/gemini";
 import FormField from "../components/planTrip/FormField";
@@ -15,7 +16,13 @@ export default function PlanTripPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { trip, updateTrip, updateTravelers, toggleTravelStyle, addTrip, resetTrip,
+  const {
+    trip,
+    updateTrip,
+    updateTravelers,
+    toggleTravelStyle,
+    addTrip,
+    resetTrip,
   } = useTrip();
 
   const [loading, setLoading] = useState(false);
@@ -53,7 +60,11 @@ export default function PlanTripPage() {
       navigate("/itinerary");
     } catch (error) {
       console.error("ITINERARY ERROR:", error);
-      alert(error.message);
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong. Please try again.";
+      toast.error(message);
     } finally {
       setLoading(false);
     }

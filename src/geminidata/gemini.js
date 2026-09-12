@@ -50,45 +50,58 @@ Use this format:
 Create one days_data object for every day.
 `;
 
-  const response = await fetch(API_URL, {
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-    },
-
-    body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            {
-              text: prompt,
-            },
-          ],
-        },
-      ],
-      generationConfig: {
-        responseMimeType: "application/json",
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(`Gemini error ${response.status}: ${errorText}`);
-  }
-
-  const data = await response.json();
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-  if (!text) {
-    throw new Error("Gemini did not return anything.");
-  }
-
   try {
-    return JSON.parse(text);
-  } catch {
-    throw new Error("Gemini returned invalid JSON.");
+    const response = await fetch(API_URL, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: prompt,
+              },
+            ],
+          },
+        ],
+
+        generationConfig: {
+          responseMimeType: "application/json",
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      let message = "User location is not supported for the API use";
+
+      try {
+        const errorData = await response.json();
+        message = errorData.message || message;
+      } catch {
+        const errorText = await response.text();
+        message = errorText || message;
+      }
+      throw new Error(message);
+    }
+
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!text) {
+      throw new Error("Gemini did not return anything.");
+    }
+    try {
+      return JSON.parse(text);
+    } catch {
+      throw new Error("Gemini returned invalid JSON.");
+    }
+
+  } catch (error) {
+    console.error("Gemini API Error:", error);
+    throw error;
   }
 }
