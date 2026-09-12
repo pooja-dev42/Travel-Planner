@@ -1,0 +1,172 @@
+[1mdiff --git a/src/pages/Itinerary.jsx b/src/pages/Itinerary.jsx[m
+[1mindex ed7c95d..26f4b42 100644[m
+[1m--- a/src/pages/Itinerary.jsx[m
+[1m+++ b/src/pages/Itinerary.jsx[m
+[36m@@ -9,10 +9,11 @@[m [mimport ActivityTimeline from "../components/trip/ActivityTimeline";[m
+ import Budget from "../components/trip/Budget";[m
+ [m
+ export default function ItineraryPage() {[m
+[31m-  const { addTrip, trips } = useTrip();[m
+[32m+[m[32m  const { addTrip } = useTrip();[m
+ [m
+   const [activeDay, setActiveDay] = useState(1);[m
+   const [activeTab, setActiveTab] = useState("itinerary");[m
+[32m+[m[32m  const [saved, setSaved] = useState(false);[m
+ [m
+   const savedTrip = localStorage.getItem("generatedTrip");[m
+   const generatedTrip = savedTrip ? JSON.parse(savedTrip) : null;[m
+[36m@@ -21,24 +22,24 @@[m [mexport default function ItineraryPage() {[m
+     return <Navigate to='/plan-trip' replace />;[m
+   }[m
+ [m
+[32m+[m[32m  // Construct search-based dynamic image URLs using the trip destination[m
+[32m+[m[32m  const destinationQuery = encodeURIComponent(generatedTrip.city || "travel");[m
+   const cityHeroImage =[m
+[31m-    generatedTrip.heroImage || "https://picsum.photos/1400/500";[m
+[31m-[m
+[32m+[m[32m    generatedTrip.heroImage ||[m
+[32m+[m[32m    `https://source.unsplash.com/1400x500/?${destinationQuery},landmark`;[m
+   const cityCardImage =[m
+[31m-    generatedTrip.cardImage || "https://picsum.photos/640/480";[m
+[31m-[m
+[31m-  const isTripSaved = trips.some((trip) => trip.id === generatedTrip.id);[m
+[32m+[m[32m    generatedTrip.cardImage ||[m
+[32m+[m[32m    `https://source.unsplash.com/640x480/?${destinationQuery},travel`;[m
+ [m
+   const handleSaveTrip = () => {[m
+[31m-    if (isTripSaved) {[m
+[31m-      return;[m
+[31m-    }[m
+     addTrip({[m
+       ...generatedTrip,[m
+       status: "Upcoming",[m
+       cardImage: cityCardImage,[m
+       heroImage: cityHeroImage,[m
+     });[m
+[32m+[m
+[32m+[m[32m    setSaved(true);[m
+   };[m
+ [m
+   const day =[m
+[36m@@ -46,82 +47,51 @@[m [mexport default function ItineraryPage() {[m
+     generatedTrip.days_data[0];[m
+ [m
+   return ([m
+[31m-    <div className='min-h-screen bg-slate-50/50 font-sans text-slate-800 antialiased'>[m
+[31m-      <main className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-12'>[m
+[31m-        {/* Header Section */}[m
+[31m-        <div className='mb-8 border-b border-slate-200/80 pb-6'>[m
+[31m-          <TripHeader[m
+[31m-            trip={generatedTrip}[m
+[31m-            handleSaveTrip={handleSaveTrip}[m
+[31m-            saved={isTripSaved}[m
+[32m+[m[32m    <main className='mx-auto max-w-7xl px-6 py-10'>[m
+[32m+[m[32m      <TripHeader[m
+[32m+[m[32m        trip={generatedTrip}[m
+[32m+[m[32m        handleSaveTrip={handleSaveTrip}[m
+[32m+[m[32m        saved={saved}[m
+[32m+[m[32m      />[m
+[32m+[m
+[32m+[m[32m      <TripSubNav activeTab={activeTab} setActiveTab={setActiveTab} />[m
+[32m+[m[32m      {activeTab === "itinerary" && ([m
+[32m+[m[32m        <>[m
+[32m+[m[32m          <div[m
+[32m+[m[32m            className='mt-6 h-64 rounded-xl bg-cover bg-center'[m
+[32m+[m[32m            style={{[m
+[32m+[m[32m              backgroundImage: `url(${[m
+[32m+[m[32m                generatedTrip.heroImage || "https://picsum.photos/1400/500"[m
+[32m+[m[32m              })`,[m
+[32m+[m[32m            }}[m
+           />[m
+[31m-        </div>[m
+[31m-[m
+[31m-        {/* Navigation Tabs */}[m
+[31m-        <div className='mb-8'>[m
+[31m-          <TripSubNav activeTab={activeTab} setActiveTab={setActiveTab} />[m
+[31m-        </div>[m
+ [m
+[31m-        {activeTab === "itinerary" && ([m
+[31m-          <div className='space-y-8 animate-fade-in'>[m
+[31m-            {/* Hero Image Card */}[m
+[31m-            <div className='relative h-64 md:h-80 w-full overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-900/5'>[m
+[31m-              <div[m
+[31m-                className='absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out hover:scale-105'[m
+[31m-                style={{[m
+[31m-                  backgroundImage: `url(${[m
+[31m-                    generatedTrip.heroImage || "https://picsum.photos/1400/500"[m
+[31m-                  })`,[m
+[31m-                }}[m
+[31m-              />[m
+[31m-              <div className='absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent' />[m
+[31m-[m
+[31m-              {/* Overlay Content */}[m
+[31m-              <div className='absolute bottom-0 left-0 p-6 md:p-8 text-white'>[m
+[31m-                <span className='inline-block rounded-full bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-medium tracking-wide uppercase text-white/90 mb-2 border border-white/10'>[m
+[31m-                  {generatedTrip.days_data.length} Days Itinerary[m
+[31m-                </span>[m
+[31m-                <h1 className='text-3xl md:text-4xl font-bold tracking-tight text-white drop-shadow-sm'>[m
+[31m-                  {generatedTrip.city}[m
+[31m-                </h1>[m
+[31m-              </div>[m
+[31m-            </div>[m
+[32m+[m[32m          <div className='mt-6'>[m
+[32m+[m[32m            <h2 className='text-2xl font-semibold text-charcoal'>[m
+[32m+[m[32m              {generatedTrip.city}[m
+[32m+[m[32m            </h2>[m
+[32m+[m[32m            <p className='text-sm text-muted'>[m
+[32m+[m[32m              {generatedTrip.days_data.length} days[m
+[32m+[m[32m            </p>[m
+[32m+[m[32m          </div>[m
+ [m
+[31m-            {/* Days Filter / Tabs */}[m
+[31m-            <div className='sticky top-4 z-10 bg-slate-50/80 backdrop-blur-md py-2 rounded-xl border border-slate-200/60 shadow-sm'>[m
+[31m-              <DayTabs[m
+[31m-                days={generatedTrip.days_data}[m
+[31m-                activeDay={activeDay}[m
+[31m-                setActiveDay={setActiveDay}[m
+[31m-              />[m
+[31m-            </div>[m
+[32m+[m[32m          <div className='mt-6'>[m
+[32m+[m[32m            <DayTabs[m
+[32m+[m[32m              days={generatedTrip.days_data}[m
+[32m+[m[32m              activeDay={activeDay}[m
+[32m+[m[32m              setActiveDay={setActiveDay}[m
+[32m+[m[32m            />[m
+[32m+[m[32m          </div>[m
+ [m
+[31m-            {/* Day Details Grid Layout */}[m
+[31m-            <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>[m
+[31m-              {/* Main Content Area */}[m
+[31m-              <div className='lg:col-span-2 space-y-6'>[m
+[31m-                <div className='rounded-2xl border border-slate-200/80 bg-white p-6 md:p-8 shadow-sm'>[m
+[31m-                  <DayOverview day={day} />[m
+[31m-                </div>[m
+[32m+[m[32m          <div className='mt-6'>[m
+[32m+[m[32m            <DayOverview day={day} />[m
+[32m+[m[32m            <ActivityTimeline activities={day.activities || []} />[m
+ [m
+[31m-                <div className='rounded-2xl border border-slate-200/80 bg-white p-6 md:p-8 shadow-sm'>[m
+[31m-                  <h3 className='text-lg font-semibold text-slate-900 mb-6 tracking-tight'>[m
+[31m-                    Schedule & Activities[m
+[31m-                  </h3>[m
+[31m-                  <ActivityTimeline activities={day.activities || []} />[m
+[31m-                </div>[m
+[31m-              </div>[m
+[31m-            </div>[m
+           </div>[m
+[31m-        )}[m
+[32m+[m[32m        </>[m
+[32m+[m[32m      )}[m
+ [m
+[31m-        {/* Budget Tab View */}[m
+[31m-        {activeTab === "budget" && ([m
+[31m-          <div className='rounded-2xl border border-slate-200/80 bg-white p-6 md:p-8 shadow-sm'>[m
+[31m-            <Budget generatedTrip={generatedTrip} />[m
+[31m-          </div>[m
+[31m-        )}[m
+[31m-      </main>[m
+[31m-    </div>[m
+[32m+[m[32m      {activeTab === "budget" && <Budget generatedTrip={generatedTrip} />}[m
+[32m+[m[32m    </main>[m
+   );[m
+ }[m
