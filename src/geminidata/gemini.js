@@ -40,7 +40,7 @@ Use this format:
           "category": "Breakfast",
           "title": "Local cafe",
           "location": "Shibuya",
-          "price": "¥1,500"
+          "price": "$1,500"
         }
       ]
     }

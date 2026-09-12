@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MapPin } from "lucide-react";
+import { Check, MapPin } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { generateItinerary } from "../geminidata/gemini";
@@ -15,19 +15,14 @@ export default function PlanTripPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { trip, updateTrip, updateTravelers, toggleTravelStyle, resetTrip } =
-    useTrip();
+  const { trip, updateTrip, updateTravelers, toggleTravelStyle, addTrip, resetTrip,
+  } = useTrip();
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    resetTrip();
-
-    const destination = location.state?.destination;
-
-    if (destination) {
-      updateTrip("destination", destination);
-    }
+    const destination = location.state?.destination || "";
+    resetTrip(destination);
   }, [location.state]);
 
   const handleSubmit = async (event) => {
@@ -35,7 +30,6 @@ export default function PlanTripPage() {
 
     try {
       setLoading(true);
-
       const result = await generateItinerary(trip);
 
       const completeTrip = {
@@ -51,6 +45,8 @@ export default function PlanTripPage() {
         notes: trip.notes,
       };
 
+      // Save the generated trip to the trips list
+      addTrip(completeTrip);
       localStorage.setItem("generatedTrip", JSON.stringify(completeTrip));
 
       resetTrip();
@@ -143,15 +139,15 @@ export default function PlanTripPage() {
               </p>
 
               <select
-                value={trip.budget || "Moderate"}
+                value={trip.budget || "Moderate: $500 - $1,000"}
                 onChange={(e) => updateTrip("budget", e.target.value)}
                 className='mt-2 w-full rounded-lg border border-border bg-white px-4 py-3 text-sm text-charcoal outline-none focus:border-wander-500 focus:ring-2 focus:ring-wander-100'>
-                <option value='Economy'>Economy: $200 - $500</option>
-                <option value='Moderate'>Moderate: $500 - $1,000</option>
-                <option value='Comfortable'>
+                <option value='$200 - $500'>Economy: $200 - $500</option>
+                <option value='$500 - $1,000'>Moderate: $500 - $1,000</option>
+                <option value='$1,000 - $2,500'>
                   Comfortable: $1,000 - $2,500
                 </option>
-                <option value='Luxury'>Luxury: $2,500+</option>
+                <option value='$2,500+'>Luxury: $2,500+</option>
               </select>
 
               <p className='mt-2 text-xs text-muted'>

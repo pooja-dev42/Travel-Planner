@@ -35,11 +35,12 @@ const Hero = () => {
             </Link>
 
             {/* Link to Destinations Section / Page */}
-            <Link
-              to='/#destinations'
+            <a
+              href='#destinations'
               className='w-full rounded-full border border-white/70 bg-white/10 px-6 py-3 text-center text-sm font-medium text-white backdrop-blur-sm transition hover:bg-white/20 sm:w-auto'>
-              Explore destinations
-            </Link>
+              {" "}
+              Explore destinations{" "}
+            </a>
           </div>
         </div>
       </div>

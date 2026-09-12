@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
-import { Clock, Wallet, Trash2 } from "lucide-react";
+import { Clock, Trash2 } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
 
 export default function TripCard({ trip }) {
   const { removeTrip } = useTrip();
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.stopPropagation();
+
     const confirmed = window.confirm(`Delete the ${trip.city} trip?`);
 
     if (confirmed) {
@@ -50,15 +52,10 @@ export default function TripCard({ trip }) {
           {trip.startDate} - {trip.endDate}
         </p>
 
-        <div className='mt-3 flex items-center gap-4 border-t border-border pt-3 text-xs text-muted'>
+        <div className='mt-3 border-t border-border pt-3 text-xs text-muted'>
           <span className='flex items-center gap-1'>
             <Clock size={13} />
             {trip.days || trip.days_data?.length || 0} days
-          </span>
-
-          <span className='flex items-center gap-1'>
-            <Wallet size={13} />
-            ${trip.budget?.estimatedSpending?.toLocaleString() || 0}
           </span>
         </div>
 
